@@ -1,10 +1,17 @@
 package com.mphasis.security.controller;
 
+import com.mphasis.security.dto.AuthResponse;
+import com.mphasis.security.dto.LoginRequest;
+import com.mphasis.security.dto.RegisterRequest;
 import com.mphasis.security.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/auth")
 public class AuthController {
 
     @Autowired
