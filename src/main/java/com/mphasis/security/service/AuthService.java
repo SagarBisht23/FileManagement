@@ -1,9 +1,15 @@
 package com.mphasis.security.service;
 
+import com.mphasis.security.dto.LoginRequest;
+import com.mphasis.security.dto.RegisterRequest;
 import com.mphasis.security.model.User;
 import com.mphasis.security.repository.UserRepository;
+import com.mphasis.security.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -27,7 +33,18 @@ public class AuthService {
         repository.save(user);
     }
 
-    public String login(){
-        return " ";
+    public String login(LoginRequest request){
+
+        User user = repository.findByUsername(request.getUsername())
+                .orElseThrow(() ->
+                        new RuntimeException("User Not Found"));
+
+        if(!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword()
+        )){
+            throw new RuntimeException("Invalid password");
+        }
+        return jwtUtil.generateToken(user.getUsername());
     }
 }
