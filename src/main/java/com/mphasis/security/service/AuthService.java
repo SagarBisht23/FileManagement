@@ -26,8 +26,8 @@ public class AuthService {
     public void register(RegisterRequest request){
         User user = new User();
 
-        user.setUsername((request.getUsername()));
-
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         repository.save(user);
@@ -35,7 +35,8 @@ public class AuthService {
 
     public String login(LoginRequest request){
 
-        User user = repository.findByUsername(request.getUsername())
+        User user = repository
+                .findByUsernameOrEmail(request.getLogin(), request.getLogin())
                 .orElseThrow(() ->
                         new RuntimeException("User Not Found"));
 

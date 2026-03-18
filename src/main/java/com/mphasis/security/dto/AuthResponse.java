@@ -11,6 +11,7 @@ public class AuthResponse {
 
     public String getToken()
     {
+
         return token;
     }
 }
