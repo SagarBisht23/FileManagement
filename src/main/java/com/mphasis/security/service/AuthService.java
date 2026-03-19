@@ -26,9 +26,9 @@ public class AuthService {
     public void register(RegisterRequest request){
         User user = new User();
 
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setUsername(request.username());
+        user.setEmail(request.email());
+        user.setPassword(passwordEncoder.encode(request.password()));
 
         repository.save(user);
     }
@@ -36,12 +36,12 @@ public class AuthService {
     public String login(LoginRequest request){
 
         User user = repository
-                .findByUsernameOrEmail(request.getLogin(), request.getLogin())
+                .findByUsernameOrEmail(request.login(), request.login())
                 .orElseThrow(() ->
                         new RuntimeException("User Not Found"));
 
         if(!passwordEncoder.matches(
-                request.getPassword(),
+                request.password(),
                 user.getPassword()
         )){
             throw new RuntimeException("Invalid password");
