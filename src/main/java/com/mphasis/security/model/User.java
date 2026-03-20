@@ -16,6 +16,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
+    private String provider;
+
     private String password;
 
     public User(long id, String username, String email, String password) {
@@ -62,12 +64,21 @@ public class User {
         this.password = password;
     }
 
+    public String getProvider(){
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider=provider;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", provider='" + provider + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
